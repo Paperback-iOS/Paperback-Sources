@@ -28,7 +28,7 @@ export const MangaDexInfo: SourceInfo = {
   description: 'Extension that pulls manga from MangaDex',
   icon: 'icon.png',
   name: 'MangaDex',
-  version: '1.1.4',
+  version: '1.1.5',
   authorWebsite: 'https://github.com/nar1n',
   websiteBaseURL: MANGADEX_DOMAIN,
   hentaiSource: false,
@@ -557,6 +557,7 @@ export class MangaDex extends Source {
       }
       mangaToUpdate = []
     }
+    mangaUpdatesFoundCallback(createMangaUpdates({ids: []}))
   }
 
   decodeHTMLEntity(str: string): string {
