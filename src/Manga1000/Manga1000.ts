@@ -36,6 +36,10 @@ export const Manga1000Info: SourceInfo = {
     {
       text: "Notifications",
       type: TagType.GREEN
+    },
+    {
+      text: "Japanese",
+      type: TagType.GREY
     }
   ]
 }
