@@ -20,7 +20,8 @@
     "paperback-extensions-common": "^2.1.11",
     "ts-mocha": "^7.0.0",
     "tsify": "^4.0.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "entities": "latest"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.21",
