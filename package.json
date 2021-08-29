@@ -2,6 +2,7 @@
   "name": "extensions",
   "version": "1.0.0",
   "description": "Additional sources for Paperback",
+  "repositoryName": "Raw Japanese Manga",
   "scripts": {
     "start": "tsc && node dist/api.js",
     "build": "tsc",
