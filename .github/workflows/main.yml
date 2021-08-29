@@ -1,13 +1,9 @@
-on:
+name: Bundle and Publish Sources
+on: 
   push:
     branches:
-      - master
-  pull_request:
-      types: [closed]
-      branches:
-          - master
-
-name: Bundle and Publish Sources
+      - '**'
+      - '!main'
 jobs:
   build:
     name: Bundle and Publish Sources
@@ -15,25 +11,34 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [14.x] 
 
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v2
+
       - name: Setup Node.js environment
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.2
         with:
           node-version: ${{ matrix.node-version }}
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Checkout existing bundles
+        uses: actions/checkout@v2
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: bundles
 
       - run: npm install
-      - run: npm run bundle
-      - run: npx typedoc -out bundles/docs
-        continue-on-error: true
+      - run: npm run bundle -- --folder=${{ steps.extract_branch.outputs.branch }}
 
-      - name: Deploy
-        uses: s0/git-publish-subdir-action@master
-        env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: bundles
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: bundles
